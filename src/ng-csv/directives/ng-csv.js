@@ -90,9 +90,11 @@ angular.module('ngCsv.directives').
       ],
       link: function (scope, element, attrs) {
         function doClick() {
+          const isSafari = () => /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+          const type = isSafari() ? 'application/csv' : 'text/csv';
           var charset = scope.charset || "utf-8";
           var blob = new Blob([scope.csv], {
-            type: "text/csv;charset="+ charset + ";"
+            type: type + ";charset="+ charset + ";"
           });
 
           if (window.navigator.msSaveOrOpenBlob) {
